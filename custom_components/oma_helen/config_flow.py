@@ -29,7 +29,7 @@ class _PendingSetup:
     delivery_site_ids: list[str]
 
 
-class OmaHelenConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     _pending: _PendingSetup | None = None
@@ -142,4 +142,3 @@ class OmaHelenConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=data_schema,
             errors=errors,
         )
-
