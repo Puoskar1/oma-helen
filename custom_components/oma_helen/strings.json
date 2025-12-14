@@ -1,0 +1,46 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Oma Helen",
+        "data": {
+          "username": "Username (email)",
+          "password": "Password",
+          "backfill_days": "Initial backfill days",
+          "enable_cost": "Create cost statistics"
+        }
+      },
+      "select_site": {
+        "title": "Select delivery site",
+        "data": {
+          "delivery_site_id": "Delivery site"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate",
+        "description": "Your Oma Helen session has expired. Please sign in again."
+      }
+    },
+    "error": {
+      "auth": "Authentication failed",
+      "unknown": "Unexpected error"
+    }
+  },
+  "services": {
+    "refresh_statistics": {
+      "name": "Refresh statistics",
+      "description": "Re-fetch and overwrite statistics for a date range (inclusive).",
+      "fields": {
+        "start_date": {
+          "name": "Start date",
+          "description": "Date in YYYY-MM-DD"
+        },
+        "end_date": {
+          "name": "End date",
+          "description": "Date in YYYY-MM-DD"
+        }
+      }
+    }
+  }
+}
+

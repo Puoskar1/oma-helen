@@ -1,0 +1,13 @@
+{
+  "domain": "oma_helen",
+  "name": "Oma Helen",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/oskar/oma-helen",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "requirements": ["oma-helen-cli==1.5.0"],
+  "version": "0.1.0",
+  "loggers": ["helenservice"]
+}
+
