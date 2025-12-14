@@ -4,8 +4,6 @@ from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 import logging
 
-from helenservice.const import RESOLUTION_QUARTER
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
@@ -105,7 +103,7 @@ class OmaHelenCoordinator(DataUpdateCoordinator[CoordinatorData]):
                 client,
                 start,
                 end,
-                RESOLUTION_QUARTER,
+                _resolution_quarter(),
             )
         except Exception as exc:
             raise UpdateFailed("Failed to fetch measurements") from exc
@@ -202,3 +200,9 @@ def _response_to_points(response) -> list[ConsumptionAndCostPoint]:
         )
     points.sort(key=lambda p: p.start)
     return points
+
+
+def _resolution_quarter() -> str:
+    from helenservice.const import RESOLUTION_QUARTER
+
+    return RESOLUTION_QUARTER

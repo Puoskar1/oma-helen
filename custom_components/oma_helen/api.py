@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from typing import TYPE_CHECKING
 
-from helenservice.api_client import HelenApiClient
-from helenservice.api_exceptions import HelenAuthenticationException, InvalidDeliverySiteException
-from helenservice.api_response import MeasurementsWithSpotPriceResponse
+if TYPE_CHECKING:
+    from helenservice.api_client import HelenApiClient
+    from helenservice.api_response import MeasurementsWithSpotPriceResponse
 
 
 class OmaHelenAuthError(Exception):
@@ -34,6 +35,9 @@ class _TokenSession:
 
 
 def login(username: str, password: str) -> OmaHelenLoginResult:
+    from helenservice.api_client import HelenApiClient
+    from helenservice.api_exceptions import HelenAuthenticationException
+
     try:
         client = HelenApiClient().login_and_init(username, password)
         token = client.get_api_access_token()
@@ -44,6 +48,9 @@ def login(username: str, password: str) -> OmaHelenLoginResult:
 
 
 def build_client(access_token: str, delivery_site_id: str | None) -> HelenApiClient:
+    from helenservice.api_client import HelenApiClient
+    from helenservice.api_exceptions import InvalidDeliverySiteException
+
     client = HelenApiClient()
     client._session = _TokenSession(access_token)  # type: ignore[attr-defined]
     client._latest_login_time = None  # type: ignore[attr-defined]
@@ -65,4 +72,3 @@ def get_measurements_with_spot_prices(
     resolution: str,
 ) -> MeasurementsWithSpotPriceResponse:
     return client.get_measurements_with_spot_prices(start, end, resolution)
-

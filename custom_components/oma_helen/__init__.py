@@ -7,13 +7,14 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import DATA_COORDINATOR, DOMAIN
-from .coordinator import OmaHelenCoordinator
-from .services import async_setup_services, async_unload_services
 
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    from .coordinator import OmaHelenCoordinator
+    from .services import async_setup_services
+
     coordinator = OmaHelenCoordinator(hass, entry, update_interval=timedelta(hours=6))
     await coordinator.async_config_entry_first_refresh()
 
@@ -25,9 +26,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    from .services import async_unload_services
+
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id, None)
         await async_unload_services(hass)
     return unload_ok
-
